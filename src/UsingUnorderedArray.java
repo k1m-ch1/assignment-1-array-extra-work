@@ -79,6 +79,6 @@ class UsingUnorderedArray {
 
     unorderedArray.insert("foo");
     unorderedArray.printInfo();
-    System.out.printf("finding 2: %d\n", unorderedArray.binarySearch("bar"));
+    System.out.printf("finding foo: %d\n", unorderedArray.find("foo"));
   }
 }

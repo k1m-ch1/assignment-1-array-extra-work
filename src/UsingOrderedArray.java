@@ -14,5 +14,6 @@ class UsingOrderedArray {
     orderedArray.insert(13.0d);
     orderedArray.delete(3.0d);
     orderedArray.printInfo();
+    System.out.printf("finding 4.0d: %d\n", orderedArray.binarySearch(4.0d));
   }
 }

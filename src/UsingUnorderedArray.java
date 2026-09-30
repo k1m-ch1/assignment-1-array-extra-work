@@ -50,7 +50,7 @@ class UsingUnorderedArray {
      * unorderedArray.printInfo();
      */
 
-    UnorderedArray unorderedArray = new UnorderedArray(10);
+    UnorderedArray<String> unorderedArray = new UnorderedArray<String>(10);
     /*
      * unorderedArray.insert(1);
      * unorderedArray.insert(2);
@@ -71,8 +71,14 @@ class UsingUnorderedArray {
      * System.out.printf("finding 3: %d\n", unorderedArray.binarySearch(3));
      * System.out.printf("finding 11: %d\n", unorderedArray.binarySearch(11));
      */
-    unorderedArray.insert(1);
+    unorderedArray.insert("foo");
+
+    unorderedArray.insert("bar");
+
+    unorderedArray.insert("baz");
+
+    unorderedArray.insert("foo");
     unorderedArray.printInfo();
-    System.out.printf("finding 2: %d\n", unorderedArray.binarySearch(2));
+    System.out.printf("finding 2: %d\n", unorderedArray.binarySearch("bar"));
   }
 }

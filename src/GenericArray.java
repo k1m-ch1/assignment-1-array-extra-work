@@ -1,4 +1,4 @@
-abstract class GenericArray {
+abstract class GenericArray<T extends Comparable<T>> {
   // this class will contain methods that will be inherited by both OrderedArray
   // and UnorderedArray because they share a similar constructor, and utility
   // functions such
@@ -6,17 +6,18 @@ abstract class GenericArray {
   // https://github.com/DSA-COSC-251-FALL-2026-GROUP-5/assignment-1-array
 
   // protected keyword is used because we want the child classes to inherit it
-  protected Integer[] arr;
+  protected T[] arr;
   protected int capacity;
   protected int occupiedAmount;
 
+  @SuppressWarnings("unchecked")
   GenericArray(int size) {
     // 1. creating the Integer arr[]. java already sets every integer to null when
     // initializing.
 
     // 2. constructor accepts an integer called size (we use int and not Integer
     // because we don't want the user to input a null when initializing the array)
-    arr = new Integer[size];
+    arr = (T[]) new Comparable[size];
     // because the occupied array is contiguous, we can keep track of the capacity
     // so that insertion is faster
     occupiedAmount = 0;
@@ -25,12 +26,12 @@ abstract class GenericArray {
 
   // UnorderedArray can just insert at the end, however, OrderedArray must insert
   // in order
-  abstract void insert(int x);
+  abstract void insert(T x);
 
   // clearly differs between ordered and unordered arrays
-  abstract int find(int x);
+  abstract int find(T x);
 
-  boolean delete(int x) {
+  boolean delete(T x) {
     // 4. deletion does differ across ordered and unordered array, however, because
     // a deletion can be implemented using a .find() and a .leftShift() method, we
     // can write its different implementation in a subclass and simply use the
@@ -56,7 +57,7 @@ abstract class GenericArray {
     return true;
   }
 
-  Integer get(int index) throws IndexOutOfBoundsException {
+  T get(int index) throws IndexOutOfBoundsException {
     // 6. get based on index doesn't differ across ordered and unordered array.
 
     // the time complexity is O(1) because an array is contiguous in memory, and if
@@ -82,9 +83,10 @@ abstract class GenericArray {
     return occupiedAmount;
   }
 
+  @SuppressWarnings("unchecked")
   void resize(int newSize) {
     // 9. the cannonical way to do this is to first create the new array
-    Integer newArr[] = new Integer[newSize];
+    T[] newArr = (T[]) new Comparable[newSize];
     // we copy everything up to either the capacity, or the newSize if we were to
     // shrink our array
 
@@ -141,7 +143,7 @@ abstract class GenericArray {
     return 2 * size;
   }
 
-  int binarySearch(int x) {
+  int binarySearch(T x) {
     int leftPtr = 0;
     int rightPtr = occupiedAmount;
     // we're searching in the range of [0, occupiedAmount). The reason for this
@@ -160,7 +162,7 @@ abstract class GenericArray {
       midPtr = (leftPtr + rightPtr) / 2;
       // we will update leftPtr such that it's somewhat lazy, meaning that it will
       // only move when we know that arr[midPtr] < x
-      if (arr[midPtr] < x) {
+      if (arr[midPtr].compareTo(x) < 0) {
         leftPtr = midPtr + 1;
         // this means that there's actually an upper bound on arr[leftPtr], that is,
         // arr[leftPtr] <= x through the whole algorithm, and in the case that
@@ -190,7 +192,7 @@ abstract class GenericArray {
         if (arr[i] == null) {
           System.out.print(", null");
         } else {
-          System.out.printf(", %d", arr[i]);
+          System.out.printf(", %s", arr[i]);
         }
       }
       System.out.println();

@@ -1,9 +1,9 @@
-public class OrderedArray extends GenericArray {
+public class OrderedArray<T extends Comparable<T>> extends GenericArray<T> {
   OrderedArray(int size) {
     super(size);
   }
 
-  void insertLinear(int x) {
+  void insertLinear(T x) {
     // doing this linearly just for differential testing purposes
     if (occupiedAmount == capacity) {
       // simple resizing if we're full
@@ -11,7 +11,7 @@ public class OrderedArray extends GenericArray {
     }
     int insertionIndex = 0;
     for (insertionIndex = 0; insertionIndex < occupiedAmount; insertionIndex++) {
-      if (arr[insertionIndex] >= x) {
+      if (arr[insertionIndex].compareTo(x) >= 0) {
         break;
       }
     }
@@ -20,7 +20,7 @@ public class OrderedArray extends GenericArray {
   }
 
   @Override
-  void insert(int x) {
+  void insert(T x) {
     // insert by doing doing binary search to find the index where it's
     // greater than or equal to the previous term and less than or equal to the
     // previous term and then inserting it there.
@@ -41,7 +41,7 @@ public class OrderedArray extends GenericArray {
   }
 
   @Override
-  int find(int x) {
+  int find(T x) {
     // 5.2. find requires one binarySearch which is O(log(n))
     int foundIndex = binarySearch(x);
     if (foundIndex == occupiedAmount) {
